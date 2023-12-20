@@ -14,25 +14,27 @@ prefs = {"profile.default_content_setting_values.geolocation": 2}
 chrome_options.add_experimental_option("prefs", prefs)
 
 driver = webdriver.Chrome(options=chrome_options)
-driver.get('https://www.ajio.com/men-backpacks/c/830201001')
+driver.get('https://www.smartprix.com/mobiles')
 
 
 # Navigate to ajio
 time.sleep(2)
 
+driver.find_element(by=By.XPATH, value='//*[@id="app"]/main/aside/div/div[5]/div[2]/label[1]/input').click()
+time.sleep(1)
+driver.find_element(by=By.XPATH, value='//*[@id="app"]/main/aside/div/div[5]/div[2]/label[2]/input').click()
+
+
+time.sleep(2)
+
 #find the height of the current page
-height = driver.execute_script('return document.body.scrollHeight')
-print(height)
+old_height = driver.execute_script('return document.body.scrollHeight')
 
-#scroll to last
-old_height = driver.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-
-#loop till the last row of items
 while True:
-    driver.execute_script('return document.body.scrollHeight')
-    time.sleep(2)
+    driver.find_element(by=By.XPATH, value='//*[@id="app"]/main/div[1]/div[2]/div[3]').click()
+    time.sleep(1)
 
-    new_height = driver.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+    new_height=driver.execute_script('return document.body.scrollHeight')
 
     if new_height == old_height:
         break
@@ -41,7 +43,6 @@ while True:
 
 html = driver.page_source
 
-with open('ajio.html','w',encoding='utf-8') as f:
+with open('smartprix.html','w',encoding='utf-8') as f:
     f.write(html)
 
-    
